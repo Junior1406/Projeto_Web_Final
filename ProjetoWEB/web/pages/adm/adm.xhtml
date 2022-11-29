@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <p:fieldset legend="Consultar Administrador" >
+        <h:form id="form2">
+            <h:panelGrid columns="2" cellpadding="5"> 
+                <p:commandButton icon="pi pi-refresh" value="Atualizar" action="#{administradorBean.listar()}" update=":form" ></p:commandButton>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form id="form"> 
+            <p:dataTable  id="data" rows="10" paginator="true"
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15" value="#{administradorBean.listadmin}" var="lista">
+                <p:column  headerText="Código" sortBy="">
+                    <h:outputText value="#{lista.codigo}"></h:outputText>                   
+                </p:column>
+                <p:column headerText="Login">
+                    <h:outputText value="#{lista.login}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Senha">
+                    <h:outputText value="#{lista.senha}"></h:outputText>   
+                </p:column>
+                <p:column headerText="">
+                    <p:commandButton icon="fa fa-edit" value="Alterar" action="#{administradorBean.alterar(lista)}" oncomplete="PF('wdlfun').show();" update="dlgfun" ></p:commandButton>
+                    <p:growl id="message" showDetail="true" />
+                </p:column>    
+            </p:dataTable>
+        </h:form>      
+    </p:fieldset> 
+
+    <p:dialog header="Administrador" widgetVar="wdlfun" id="dlgfun" minHeight="40" closable="false">
+        <h:form id="form3">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel  value="Login:"></p:outputLabel>    
+                <p:inputText id="login" value="#{administradorBean.admin.login}"></p:inputText>
+                <p:outputLabel value="Senha:"></p:outputLabel>    
+                <p:inputText id="senha" type="password" value="#{administradorBean.admin.senha}"></p:inputText>
+                <p:commandButton value="Enviar/Fechar" action="#{administradorBean.cadastro()}" update="@form" oncomplete="PF('wdlfun').hide();" ></p:commandButton>
+                <p:outputPanel></p:outputPanel>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:decorate>

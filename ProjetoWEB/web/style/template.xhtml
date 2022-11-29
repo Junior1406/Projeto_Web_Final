@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title >Sistema de Gerenciamento</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="150" style="font-size: 60px; text-align: center; font-family: sans-serif" header="Sistema de Gerenciamento" resizable="false" closable="false" collapsible="false">
+                <h:outputText value="" />
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="50"  resizable="false" closable="false" collapsible="false">
+                <h:outputText  value="" />
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="auto" header="Menu" resizable="false" closable="false" collapsible="false">
+                <h:form>
+                    <p:panelMenu style="width:190px">
+                        <p:submenu label="Arquivo" icon="pi pi-briefcase">
+                            <p:menuitem value="Principal" icon="pi pi-home" outcome="/pages/funcionario/bvfun.xhtml"/>
+                            <p:menuitem value="Sair" icon="pi pi-sign-out"  action="#{funcionarioBean.logout()}"/>
+                        </p:submenu>
+                        <p:submenu label="Consultas/Cadastros" icon="pi pi-briefcase">
+                            <p:menuitem value="Produtos" icon="fa fa-cart-plus" outcome="/pages/funcionario/produtos.xhtml"/>
+                        </p:submenu>
+                    </p:panelMenu>
+                    
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <ui:insert></ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+
+    </h:body>
+</html>
+

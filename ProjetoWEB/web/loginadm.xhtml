@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Login</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit style="font-size: 60px; text-align: center; font-family: sans-serif" position="north" size="150" header="Sistema de Gerenciamento" resizable="false" closable="false" collapsible="false">
+                <h:outputText value="" />
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="50"  resizable="false" closable="false" collapsible="false">
+                <h:outputText   />
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="auto" header="Menu" resizable="false" closable="false" collapsible="false">
+                <h:form>
+                    <p:growl showDetail="true"/>
+                    <p:panelMenu style="width:190px">
+                        <p:submenu label="Arquivo" icon="pi pi-briefcase">
+                            <p:menuitem value="Principal" icon="pi pi-home" outcome="/index.xhtml"/>
+                        </p:submenu>
+                    </p:panelMenu>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <p:dialog responsive="true" visible="true" width="auto" height="auto" header="Acessar o Sistema" showHeader="false" resizable="false">            
+                    <h:panelGrid style="margin: 0 auto; font-size: large "><h:outputText styleClass="fa fa-user fa-4x" /></h:panelGrid>
+                    <h:form id="formLogin">
+                        <h:panelGrid cellspacing="10">
+                            Digite seu usuário e senha:                    
+                            <p:messages id="messagesLogin"/>
+                            <p:inputText placeholder="Usuário" size="40" value="#{administradorBean.admin.login}" required="true" requiredMessage="Campo Login é obrigatório"/>
+                            <p:password  placeholder="Senha"  size="40" value="#{administradorBean.admin.senha}" required="true" requiredMessage="Campo Senha é obrigatório"/>
+                            <p:commandButton icon="pi pi-sign-in" action="#{administradorBean.entrar()}" value="Entrar"  update="@form"/>
+                        </h:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

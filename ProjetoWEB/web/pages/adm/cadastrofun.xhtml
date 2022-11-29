@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <p:fieldset legend="Cadastrar Funcionarios">
+
+        <h:form id="for" style="">
+            <p:growl id="fun" showDetail="true" sticky="true"/>
+            <p:panelGrid columns="2" style=" margin-top: 25px" >
+                <p:outputLabel  value="Nome:"></p:outputLabel>    
+                <p:inputText id="nome" size="30" value="#{funcionarioBean.ct_funcionario.nome}" required="true" requiredMessage="Campo é Nome Obrigatório" ></p:inputText>
+                <p:outputLabel value="Cpf:"></p:outputLabel>    
+                <p:inputMask mask="999.999.999-99" id="cpf" value="#{funcionarioBean.ct_funcionario.cpf}" required="true" requiredMessage="Campo Cpf é Obrigatório"></p:inputMask>
+                <p:outputLabel value="Senha:"></p:outputLabel>    
+                <p:inputText type="password" id="senha" value="#{funcionarioBean.ct_funcionario.senha}"></p:inputText>
+                <p:outputLabel value="Email:"></p:outputLabel>    
+                <p:inputText id="email" value="#{funcionarioBean.ct_funcionario.email}" required="true" requiredMessage="Campo Email é Obrigatório"></p:inputText>
+                <p:outputLabel value="Telefone"></p:outputLabel>   
+                <p:inputMask  id="telefone" mask="(99)99999-9999" value="#{funcionarioBean.ct_funcionario.telefone}" required="true" requiredMessage="Campo Telefone é Obrigatório"></p:inputMask>
+                <p:outputLabel value="Cargo:"></p:outputLabel> 
+                <p:inputText  id="cargo"  value="#{funcionarioBean.ct_funcionario.cargo}" required="true" requiredMessage="Campo Cargo é Obrigatório"></p:inputText>
+                <p:outputLabel  value="Status do Funcionario:" />
+                <p:selectOneMenu id="Status" value="#{funcionarioBean.ct_funcionario.status}" style="width:125px" >
+                    <f:selectItem itemLabel="Selecione" itemValue="" />
+                    <f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+                    <f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+                </p:selectOneMenu>
+                <p:commandButton icon="pi pi-check" update="@form" value="Cadastrar" action="#{funcionarioBean.cadastrar()}"  ></p:commandButton>
+                <p:outputPanel></p:outputPanel>
+            </p:panelGrid> 
+        </h:form>
+    </p:fieldset> 
+</ui:decorate>

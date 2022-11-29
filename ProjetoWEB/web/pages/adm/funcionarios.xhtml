@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <p:fieldset legend="Consultar Funcionarios" >
+        <h:form id="form2">
+            <h:panelGrid columns="2" cellpadding="5"> 
+                <p:commandButton icon="pi pi-refresh" value="Atualizar" action="#{funcionarioBean.listar()}" update=":form" ></p:commandButton>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form id="form"> 
+            <p:dataTable  id="data" rows="10" paginator="true"
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15" value="#{funcionarioBean.listafun}" var="lista">
+                <p:column  headerText="Código" sortBy="">
+                    <h:outputText value="#{lista.codigo}"></h:outputText>                   
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{lista.nome}">
+                    <h:outputText value="#{lista.nome}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Cpf">
+                    <h:outputText value="#{lista.cpf}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{lista.email}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Telefone" >
+                    <h:outputText value="#{lista.telefone}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Cargo" style="width: 100px">
+                    <h:outputText value="#{lista.cargo}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Status" style="width: 100px">
+                    <h:outputText value="#{lista.status}"></h:outputText>   
+                </p:column>
+                <p:column headerText="">
+                    <p:commandButton icon="fa fa-edit" value="Alterar" action="#{funcionarioBean.alterar(lista)}" oncomplete="PF('wdlfun').show();" update="dlgfun" ></p:commandButton>
+                    <p:commandButton value="Excluir" icon="pi pi-trash" action="#{funcionarioBean.deletar(lista)}" update="@form">
+                        <p:confirm header="Confirmação" message="Você tem Certeza?" icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+                    <p:growl id="message" showDetail="true" />
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </p:column>    
+            </p:dataTable>
+        </h:form>      
+    </p:fieldset> 
+
+    <p:dialog header="Funcionario" widgetVar="wdlfun" id="dlgfun" minHeight="40" closable="false">
+        <h:form id="form3">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel  value="Nome do Funcionario:"></p:outputLabel>    
+                <p:inputText id="nome" size="50" value="#{funcionarioBean.ct_funcionario.nome}"></p:inputText>
+                <p:outputLabel value="Email:"></p:outputLabel>    
+                <p:inputText id="email" value="#{funcionarioBean.ct_funcionario.email}"></p:inputText>
+                <p:outputLabel value="Cpf:"></p:outputLabel>    
+                <p:inputMask mask="999.999.999-99" id="cpf" value="#{funcionarioBean.ct_funcionario.cpf}"></p:inputMask>
+                <p:outputLabel value="Senha:"></p:outputLabel>    
+                <p:inputText type="password" id="senha" value="#{funcionarioBean.ct_funcionario.senha}"></p:inputText>
+                 <p:outputLabel value="Telefone"></p:outputLabel>   
+                <p:inputMask  id="telefone" mask="(99)99999-9999" value="#{funcionarioBean.ct_funcionario.telefone}"></p:inputMask>
+                <p:outputLabel value="Cargo:"></p:outputLabel> 
+                <p:inputText  id="cargo" size="10"  value="#{funcionarioBean.ct_funcionario.cargo}"></p:inputText>
+                <p:outputLabel for="Status" value="Status do Funcionario:" />
+                <p:selectOneMenu id="Status" value="#{funcionarioBean.ct_funcionario.status}" style="width:125px">
+                    <f:selectItem itemLabel="Selecione" itemValue="" />
+                    <f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+                    <f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+                </p:selectOneMenu>
+                <p:commandButton value="Enviar/Fechar" action="#{funcionarioBean.cadastrar()}" update=":form" oncomplete="PF('wdlfun').hide();" ></p:commandButton>
+                <p:outputPanel></p:outputPanel>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:decorate>

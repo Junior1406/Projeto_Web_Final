@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Sistema de Gerenciamento</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit style="font-size: 60px; text-align: center; font-family: sans-serif" position="north" size="150" header="Sistema de Gerenciamento" resizable="false" closable="false" collapsible="false">
+                <h:outputText value="" />
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="50"  resizable="false" closable="false" collapsible="false">
+                <h:outputText  value="" />
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="auto" header="Menu" resizable="false" closable="false" collapsible="false">
+                <h:form>
+                    <p:panelMenu style="width:190px">
+                        <p:submenu label="Arquivo" icon="pi pi-briefcase">
+                            <p:menuitem value="Principal" icon="pi pi-home" outcome="/index.xhtml"/>
+                            <p:menuitem value="Entrar" icon="pi pi-sign-in" outcome="/login.xhtml"/>
+                        </p:submenu>
+                    </p:panelMenu>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                 <style type="text/css">
+        .value {
+            font-weight: bold;
+        }
+    </style>
+    <h:form id="form" >
+        <p:commandButton  icon="pi pi-replay" value="Atualizar Lista de Produtos" action="#{produtoBean.listar()}" update="@form"></p:commandButton>
+
+        <p:dataGrid var="prod" value="#{produtoBean.listaprod}" columns="3" layout="grid"
+                    rows="12" paginator="true" id="produtos"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16">
+            <f:facet name="header" >
+                Produtos
+            </f:facet>
+            <p:panel header="#{prod.nome_prod}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <h:outputText value="R$#{prod.valor}" />
+                    <p:commandLink update=":form:prodD" oncomplete="PF('prodDialog').show()" title="View Detail">
+                        <h:outputText styleClass="pi pi-search" style="margin:0 auto;"/>
+                        <f:setPropertyActionListener value="#{prod}" target="#{produtoBean.selectpro}" />
+                    </p:commandLink>
+                </h:panelGrid>
+            </p:panel>
+        </p:dataGrid>
+        <p:dialog header="Detalhes do Produto" widgetVar="prodDialog"  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:outputPanel id="prodD" style="text-align:center;">
+                <p:panelGrid  columns="2" rendered="#{not empty produtoBean.selectpro}" columnClasses="label,value">
+                    <f:facet name="header">
+                    </f:facet>
+                    <h:outputText value="Código:" />
+                    <h:outputText value="#{produtoBean.selectpro.codigo}" />
+                    <h:outputText value="Nome" />
+                    <h:outputText value="#{produtoBean.selectpro.nome_prod}" />
+                    <h:outputText value="Descrição:" />
+                    <h:outputText value="#{produtoBean.selectpro.descricao}"/>
+                    <h:outputText value="Categoria" />
+                    <h:outputText value="#{produtoBean.selectpro.categoria}" />
+                    <h:outputText value="Valor" />
+                    <h:outputText value="R$#{produtoBean.selectpro.valor}" />
+                     <h:outputText value="Estoque" />
+                     <h:outputText value="Qtd:#{produtoBean.selectpro.estoque}" />
+                </p:panelGrid>
+            </p:outputPanel>
+        </p:dialog>
+        
+        
+        
+    </h:form>
+            </p:layoutUnit>
+        </p:layout>
+        
+    </h:body>
+</html>
+

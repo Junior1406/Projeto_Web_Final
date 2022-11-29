@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="/style/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <p:fieldset legend="Consultar e Cadastrar Produtos" >
+        <h:form id="form2">
+            <h:panelGrid columns="2" cellpadding="5"> 
+                <p:commandButton icon="pi pi-plus" value="Novo" update="form3" oncomplete="PF('wdlpro').show();"></p:commandButton>
+                <p:commandButton icon="pi pi-refresh" value="Atualizar" action="#{produtoBean.listar()}" update=":form" ></p:commandButton>
+            </h:panelGrid>
+            <p:commandButton value="sair" action="#{administradorBean.logout}"/>
+        </h:form>
+        <h:form id="form"> 
+            <p:dataTable  id="data" rows="10" paginator="true"
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15" value="#{produtoBean.listaprod}" var="lista">
+                <p:column  headerText="Código" sortBy="">
+                    <h:outputText value="#{lista.codigo}"></h:outputText>                   
+                </p:column>
+                <p:column headerText="Nome do Produto" >
+                    <h:outputText value="#{lista.nome_prod}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{lista.descricao}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Categoria" sortBy="#{lista.categoria}">
+                    <h:outputText value="#{lista.categoria}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Estoque" style="width: 100px">
+                    <h:outputText value="#{lista.estoque}"></h:outputText>   
+                </p:column>
+                <p:column headerText="Valor" style="width: 150px">
+                    <h:outputText  value="R$#{lista.valor}"></h:outputText>   
+                </p:column>
+                <p:column headerText="">
+                    <p:commandButton icon="fa fa-edit" value="Alterar" action="#{produtoBean.alterar(lista)}" oncomplete="PF('wdlpro').show();" update="dlgprod" ></p:commandButton>
+                    <p:commandButton value="Excluir" icon="pi pi-trash" action="#{produtoBean.deletar(lista)}" update="@form">
+                        <p:confirm header="Confirmação" message="Você tem Certeza?" icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+                    <p:growl id="message" showDetail="true" />
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                    </p:confirmDialog>
+                </p:column>    
+            </p:dataTable>
+        </h:form>      
+    </p:fieldset> 
+
+    <p:dialog header="Funcionario" widgetVar="wdlpro" id="dlgprod" minHeight="40" closable="false">
+        <h:form id="form3">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel  value="Nome do Produto:"></p:outputLabel>    
+                <p:inputText id="nome" size="50" value="#{produtoBean.ct_produto.nome_prod}"></p:inputText>
+                <p:outputLabel value="Descrição:"></p:outputLabel>    
+                <p:inputTextarea id="descricao" value="#{produtoBean.ct_produto.descricao}"></p:inputTextarea>
+                <p:outputLabel value="Categoria"></p:outputLabel>   
+                <p:inputText id="categoria" value="#{produtoBean.ct_produto.categoria}"></p:inputText>
+                <p:outputLabel value="Valor do Produto:"></p:outputLabel> 
+                <p:inputNumber  id="valor" size="10" symbol="R$" value="#{produtoBean.ct_produto.valor}"></p:inputNumber>
+                <p:outputLabel value="Estoque:"></p:outputLabel> 
+                <p:inputText  id="estoque" size="10"  value="#{produtoBean.ct_produto.estoque}"></p:inputText>
+                <p:commandButton value="Enviar" action="#{produtoBean.cadastrar()}" update=":form" oncomplete="PF('wdlpro').hide();" ></p:commandButton>
+                <p:outputPanel></p:outputPanel>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:decorate>
